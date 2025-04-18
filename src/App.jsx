@@ -57,12 +57,12 @@ function App() {
   }
 
   return (
-    <>
+    <div className="appContainer">
       <Description />
       <Options totalFB={totalFeedback} onGood={updGood} onNeutral={updNeutral} onBad={updBad} onReset={reSet} />
       {totalFeedback > 0 && <Feedback value={{ ...feedbacks, totalFeedback, procentPositive }} />}
       {totalFeedback === 0 && <Notification />}
-    </>
+    </div>
   )
 }
 
