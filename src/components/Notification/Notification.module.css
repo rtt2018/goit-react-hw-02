@@ -4,3 +4,9 @@
   align-items: center;
   flex: 1;
 }
+
+.notification {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: red;
+  font-size: 1.2em;
+}
