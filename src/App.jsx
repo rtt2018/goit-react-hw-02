@@ -7,13 +7,13 @@ import Notification from './components/Notification/Notification.jsx'
 
 function App() {
 
-  const [feedbacks, setFeedbacks] = useState((JSON.parse(window.localStorage.getItem("feedback")) ?? { good: 0, neutral: 0, bad: 0 }));
+  const [feedbacks, setFeedbacks] = useState((JSON.parse(window.localStorage.getItem("superMegaSpecialFeedback")) ?? { good: 0, neutral: 0, bad: 0 }));
 
   const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
   const procentPositive = isNaN(totalFeedback) ? 0 : Math.round((feedbacks.good / totalFeedback) * 100);
 
   useEffect(() => {
-    window.localStorage.setItem("feedback", JSON.stringify(feedbacks));
+    window.localStorage.setItem("superMegaSpecialFeedback", JSON.stringify(feedbacks));
   }, [feedbacks]);
 
   const updateFeedback = feedbackType => {
