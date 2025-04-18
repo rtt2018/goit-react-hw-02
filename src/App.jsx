@@ -23,8 +23,8 @@ function App() {
     window.localStorage.setItem("feedback", JSON.stringify(feedbacks));
   }, [feedbacks]);
 
-  const updateState = (event) => {
-    const typeFeedback = event.target.dataset.type;
+  const updateFeedback = feedbackType => {
+    const typeFeedback = feedbackType.target.dataset.type;
     typeFeedback === "reset"
       ? setFeedbacks({ good: 0, neutral: 0, bad: 0 })
       : setFeedbacks({ ...feedbacks, [typeFeedback]: feedbacks[typeFeedback] + 1 });
@@ -33,7 +33,7 @@ function App() {
   return (
     <div className="appContainer">
       <Description />
-      <Options totalFB={totalFeedback} onFeedbackAction={updateState} />
+      <Options totalFB={totalFeedback} onFeedbackAction={updateFeedback} />
       {totalFeedback > 0 && <Feedback value={{ ...feedbacks, totalFeedback, procentPositive }} />}
       {totalFeedback === 0 && <Notification />}
     </div>
