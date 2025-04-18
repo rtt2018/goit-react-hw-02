@@ -6,60 +6,34 @@ import Feedback from './components/Feedback/Feedback.jsx'
 import Notification from './components/Notification/Notification.jsx'
 
 function App() {
-  const [good, setGood] = useState(() => {
+
+  const [feedbacks, setFeedbacks] = useState(() => {
     const restoreFeedback = window.localStorage.getItem("feedback");
     if (restoreFeedback !== null) {
-      return JSON.parse(restoreFeedback).good;
+      return JSON.parse(restoreFeedback);
     }
-    return 0;
+    return { good: 0, neutral: 0, bad: 0 };
   });
 
-  const [neutral, setNeutral] = useState(() => {
-    const restoreFeedback = window.localStorage.getItem("feedback");
-    if (restoreFeedback !== null) {
-      return JSON.parse(restoreFeedback).neutral;
-    }
-    return 0;
-  });
 
-  const [bad, setBad] = useState(() => {
-    const restoreFeedback = window.localStorage.getItem("feedback");
-    if (restoreFeedback !== null) {
-      return JSON.parse(restoreFeedback).bad;
-    }
-    return 0;
-  });
-
-  const totalFeedback = good + neutral + bad;
-  const procentPositive = isNaN(totalFeedback) ? 0 : Math.round((good / totalFeedback) * 100);
-  const feedbacks = { good, neutral, bad };
+  const totalFeedback = feedbacks.good + feedbacks.neutral + feedbacks.bad;
+  const procentPositive = isNaN(totalFeedback) ? 0 : Math.round((feedbacks.good / totalFeedback) * 100);
 
   useEffect(() => {
-    window.localStorage.setItem("feedback", JSON.stringify({ good, neutral, bad }));
-  }, [good, neutral, bad]);
+    window.localStorage.setItem("feedback", JSON.stringify(feedbacks));
+  }, [feedbacks]);
 
-  const updGood = () => {
-    setGood(good + 1);
-  }
-
-  const updNeutral = () => {
-    setNeutral(neutral + 1);
-  }
-
-  const updBad = () => {
-    setBad(bad + 1);
-  }
-
-  const reSet = () => {
-    setGood(0);
-    setNeutral(0);
-    setBad(0);
+  const updateState = (event) => {
+    const typeFeedback = event.target.dataset.type;
+    typeFeedback === "reset"
+      ? setFeedbacks({ good: 0, neutral: 0, bad: 0 })
+      : setFeedbacks({ ...feedbacks, [typeFeedback]: feedbacks[typeFeedback] + 1 });
   }
 
   return (
     <div className="appContainer">
       <Description />
-      <Options totalFB={totalFeedback} onGood={updGood} onNeutral={updNeutral} onBad={updBad} onReset={reSet} />
+      <Options totalFB={totalFeedback} onFeedbackAction={updateState} />
       {totalFeedback > 0 && <Feedback value={{ ...feedbacks, totalFeedback, procentPositive }} />}
       {totalFeedback === 0 && <Notification />}
     </div>
