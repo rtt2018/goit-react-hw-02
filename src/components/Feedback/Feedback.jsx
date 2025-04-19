@@ -8,7 +8,7 @@ export default function Feedback(props) {
             <p className={css.feedbackItem}>Neutral: {neutral}</p>
             <p className={css.feedbackItem}>Bad: {bad}</p>
             <p className={css.feedbackItem}>Total: {totalFeedback}</p>
-            {totalFeedback > 0 && <p className={css.feedbackItem}>Positive: {procentPositive}%</p>}
+            <p className={css.feedbackItem}>Positive: {procentPositive}%</p>
         </div >
     );
 }
